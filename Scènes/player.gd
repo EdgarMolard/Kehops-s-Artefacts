@@ -7,6 +7,7 @@ const ROTATION_SPEED := 2.5
 var movement_animation_name: String = ""
 
 func _ready() -> void:
+	add_to_group("joueur")
 	if animation_player == null:
 		push_warning("Aucun AnimationPlayer trouvé dans le modèle du joueur.")
 		return
@@ -24,6 +25,7 @@ func _ready() -> void:
 	animation.loop_mode = Animation.LOOP_LINEAR
 
 func _physics_process(delta: float) -> void:
+	
 	# Gauche / droite : rotation sur place
 	var rotation_input := Input.get_axis("ui_left", "ui_right")
 	rotate_y(-rotation_input * ROTATION_SPEED * delta)
@@ -59,3 +61,4 @@ func _stop_movement_animation() -> void:
 
 	if animation_player.is_playing():
 		animation_player.stop()
+		
