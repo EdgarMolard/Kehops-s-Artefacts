@@ -1,0 +1,76 @@
+[gd_scene format=3 uid="uid://dcktsuoy7nr5u"]
+
+[ext_resource type="Script" uid="uid://j150g2ah0ksh" path="res://Graphismes/Objets 3D/porte.gd" id="1_tfub5"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_rnmcw"]
+size = Vector3(2, 3, 0.2)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_148hs"]
+size = Vector3(2, 3, 0.2)
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_148hs"]
+
+[sub_resource type="Animation" id="Animation_bns1o"]
+resource_name = "Ouvrir"
+markers = [{
+"color": Color(1, 1, 1, 1),
+"name": &"rotation",
+"time": 0.04
+}, {
+"color": Color(1, 1, 1, 1),
+"name": &"Rotation Y = 50",
+"time": 1.02
+}]
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("PorteMobile:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector3(0, 0, 0), Vector3(0, 1.134464, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_tfub5"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("PorteMobile:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0, 0, 0)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_6vt40"]
+_data = {
+&"Ouvrir": SubResource("Animation_bns1o"),
+&"RESET": SubResource("Animation_tfub5")
+}
+
+[node name="Porte" type="Node3D" unique_id=671626376]
+script = ExtResource("1_tfub5")
+
+[node name="PorteMobile" type="AnimatableBody3D" parent="." unique_id=1234950046]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="PorteMobile" unique_id=1581848243]
+mesh = SubResource("BoxMesh_rnmcw")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="PorteMobile" unique_id=1446062339]
+shape = SubResource("BoxShape3D_148hs")
+
+[node name="ZoneInteraction" type="Area3D" parent="." unique_id=869781849]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="ZoneInteraction" unique_id=1761912888]
+transform = Transform3D(3, 0, 0, 0, 3, 0, 0, 0, 3, 0, 0, 0)
+shape = SubResource("SphereShape3D_148hs")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=1869037019]
+libraries/ = SubResource("AnimationLibrary_6vt40")

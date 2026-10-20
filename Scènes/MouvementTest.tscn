@@ -4,6 +4,7 @@
 [ext_resource type="PackedScene" uid="uid://bqpesdyoqestt" path="res://Maps/Maps01/kheops.tscn" id="2_1enry"]
 [ext_resource type="PackedScene" uid="uid://dd8ax83ymrmuh" path="res://Graphismes/Player/scene.gltf" id="2_8tp81"]
 [ext_resource type="PackedScene" uid="uid://yk0ird8cl61s" path="res://Graphismes/Objets 3D/Tresors/Tresor.tscn" id="4_7ko82"]
+[ext_resource type="PackedScene" uid="uid://dcktsuoy7nr5u" path="res://Graphismes/Objets 3D/Porte.tscn" id="5_k0ied"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_148hs"]
 
@@ -38,3 +39,6 @@ id_tresor = 2
 [node name="Tresor3" parent="." unique_id=336927923 instance=ExtResource("4_7ko82")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8.090409, -0.5062504, 6.5851555)
 id_tresor = 3
+
+[node name="Porte" parent="." unique_id=671626376 instance=ExtResource("5_k0ied")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.745343, 0.5437502, 10.095472)
