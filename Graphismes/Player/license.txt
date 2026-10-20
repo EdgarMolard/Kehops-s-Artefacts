@@ -1,0 +1,11 @@
+Model Information:
+* title:	Archeologist Girl
+* source:	https://sketchfab.com/3d-models/archeologist-girl-0d545c88daba4a0bb942505861adfceb
+* author:	DrTowers (https://sketchfab.com/DrTowers)
+
+Model License:
+* license type:	CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)
+* requirements:	Author must be credited. Commercial use is allowed.
+
+If you use this 3D model in your project be sure to copy paste this credit wherever you share it:
+This work is based on "Archeologist Girl" (https://sketchfab.com/3d-models/archeologist-girl-0d545c88daba4a0bb942505861adfceb) by DrTowers (https://sketchfab.com/DrTowers) licensed under CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)
