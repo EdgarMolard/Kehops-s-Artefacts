@@ -3,6 +3,7 @@
 [ext_resource type="Script" uid="uid://bida8s45pasu6" path="res://Scènes/player.gd" id="1_nr7os"]
 [ext_resource type="PackedScene" uid="uid://bqpesdyoqestt" path="res://Maps/Maps01/kheops.tscn" id="2_1enry"]
 [ext_resource type="PackedScene" uid="uid://dd8ax83ymrmuh" path="res://Graphismes/Player/scene.gltf" id="2_8tp81"]
+[ext_resource type="PackedScene" uid="uid://yk0ird8cl61s" path="res://Graphismes/Objets 3D/Tresors/Tresor.tscn" id="4_7ko82"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_148hs"]
 
@@ -26,3 +27,14 @@ transform = Transform3D(0.8660254, 0.43301272, -0.24999999, 0, 0.49999997, 0.866
 
 [node name="KHEOPS" parent="." unique_id=1596324785 instance=ExtResource("2_1enry")]
 transform = Transform3D(50, 0, 0, 0, 50, 0, 0, 0, 50, 0, -1, 0)
+
+[node name="Tresor" parent="." unique_id=1136815373 instance=ExtResource("4_7ko82")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.759012, -0.50625, 0.6690495)
+
+[node name="Tresor2" parent="." unique_id=619824277 instance=ExtResource("4_7ko82")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.379897, -0.5062502, 3.1158257)
+id_tresor = 2
+
+[node name="Tresor3" parent="." unique_id=336927923 instance=ExtResource("4_7ko82")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8.090409, -0.5062504, 6.5851555)
+id_tresor = 3

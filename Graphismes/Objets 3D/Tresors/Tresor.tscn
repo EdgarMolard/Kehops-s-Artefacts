@@ -1,0 +1,18 @@
+[gd_scene format=3 uid="uid://yk0ird8cl61s"]
+
+[ext_resource type="Script" uid="uid://h5rihlv2yanl" path="res://Graphismes/Objets 3D/Tresors/recup_tresors.gd" id="1_fse2q"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_l8nmn"]
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_wruui"]
+
+[node name="Tresor" type="Area3D" unique_id=1136815373]
+script = ExtResource("1_fse2q")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=902344263]
+transform = Transform3D(0.9, 0, 0, 0, 0.9, 0, 0, 0, 0.9, 0, 0, 0)
+mesh = SubResource("BoxMesh_l8nmn")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1318787281]
+transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, 0, 0, 0)
+shape = SubResource("SphereShape3D_wruui")
