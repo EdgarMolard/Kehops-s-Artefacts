@@ -1,33 +1,45 @@
-# Ignore build output directories
-/bin/
-/obj/
+# Godot 4 - fichiers générés
+.godot/
 
-# Godot 4+ specific ignores
-# Tout .godot/ est ignoré SAUF extension_list.cfg : le livrer évite les 10 erreurs rouges 'FmodServer'
-# au tout premier import (testé le 17/10/2026, voir docs/logs/premier-import-avec-extension-list.log).
-**/.godot/*
-!**/.godot/extension_list.cfg
+# Exceptions : nécessaire dans ce projet pour l'import FMOD
+!.godot/extension_list.cfg
 
-# Godot-specific ignores
+# Ancien dossier d'import Godot 3
 .import/
+
+# Fichiers d'export locaux
 export.cfg
 export_presets.cfg
 
-# Imported translations (automatically generated from CSV files)
+# Traductions générées
 *.translation
 
-# Mono-specific ignores
+# Godot Mono / .NET
 .mono/
 data_*/
 mono_crash.*.json
 
+# Builds et fichiers compilés
+/bin/
+/obj/
+
+# Fichiers système
+.DS_Store
+Thumbs.db
+
+# Fichiers temporaires
+*.tmp
+*.import.tmp
+~*.dll
+
+# Python
+__pycache__/
+*.pyc
+
+# Outils IA / fichiers locaux
 .claude/
 CLAUDE.md
-.DS_Store
-# Hackathon oct. 2026 : fichiers temporaires et résidus à ne jamais distribuer
-*.tmp
-~*.dll
-*.import.tmp
 ConversationTrack.md
+
+# Logs et sauvegardes temporaires
 docs/logs/*.bak
-__pycache__/
