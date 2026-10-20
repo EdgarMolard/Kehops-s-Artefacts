@@ -1,0 +1,28 @@
+[gd_scene format=3 uid="uid://6omhm0627yer"]
+
+[ext_resource type="Script" uid="uid://bida8s45pasu6" path="res://Scènes/player.gd" id="1_nr7os"]
+[ext_resource type="PackedScene" uid="uid://bqpesdyoqestt" path="res://Maps/Maps01/kheops.tscn" id="2_1enry"]
+[ext_resource type="PackedScene" uid="uid://dd8ax83ymrmuh" path="res://Graphismes/Player/scene.gltf" id="2_8tp81"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_148hs"]
+
+[node name="MouvementTest" type="Node3D" unique_id=136737210]
+
+[node name="Player" type="CharacterBody3D" parent="." unique_id=1313566045]
+script = ExtResource("1_nr7os")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Player" unique_id=1869274928]
+transform = Transform3D(0.8, 0, 0, 0, 0.8, 0, 0, 0, 0.8, 0, 0, 0)
+shape = SubResource("CapsuleShape3D_148hs")
+
+[node name="TopDownCamera" type="Camera3D" parent="Player" unique_id=1470280536]
+transform = Transform3D(1, 0, 0, 0, 0.57357645, 0.81915206, 0, -0.81915206, 0.57357645, 0, 3, 1.5)
+
+[node name="Sketchfab_Scene" parent="Player" unique_id=763505169 instance=ExtResource("2_8tp81")]
+transform = Transform3D(-0.005, 0, -4.3711387e-10, 0, 0.005, 0, 4.3711387e-10, 0, -0.005, 0, 0.4, 0)
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="." unique_id=1572427533]
+transform = Transform3D(0.8660254, 0.43301272, -0.24999999, 0, 0.49999997, 0.86602545, 0.5, -0.75, 0.43301266, 0, 0, 0)
+
+[node name="KHEOPS" parent="." unique_id=1596324785 instance=ExtResource("2_1enry")]
+transform = Transform3D(50, 0, 0, 0, 50, 0, 0, 0, 50, 0, -1, 0)
