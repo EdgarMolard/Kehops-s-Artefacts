@@ -4,6 +4,7 @@ const SPEED := 5.0
 const ROTATION_SPEED := 2.5
 
 var joystick_dir := Vector2.ZERO
+var keyboard_dir := Vector2.ZERO
 
 # Gestion des animations
 @onready var animation_player: AnimationPlayer = find_child("AnimationPlayer", true, false) as AnimationPlayer
@@ -43,14 +44,21 @@ func _ready() -> void:
 	animation.loop_mode = Animation.LOOP_LINEAR
 
 func _physics_process(delta: float) -> void:
-	rotate_y(-joystick_dir.x * ROTATION_SPEED * delta)
+	keyboard_dir = Input.get_vector("ui_left", "ui_right", "ui_up", "ui_down")
+	var input_dir := joystick_dir
+	if not is_zero_approx(keyboard_dir.x):
+		input_dir.x = keyboard_dir.x
+	if not is_zero_approx(keyboard_dir.y):
+		input_dir.y = keyboard_dir.y
+
+	rotate_y(-input_dir.x * ROTATION_SPEED * delta)
 
 	var forward_direction := -transform.basis.z
 
-	if abs(joystick_dir.y) > 0.05:
+	if abs(input_dir.y) > 0.05:
 
-		velocity.x = forward_direction.x * (-joystick_dir.y) * SPEED
-		velocity.z = forward_direction.z * (-joystick_dir.y) * SPEED
+		velocity.x = forward_direction.x * (-input_dir.y) * SPEED
+		velocity.z = forward_direction.z * (-input_dir.y) * SPEED
 		_play_movement_animation()
 	else:
 		velocity.x = move_toward(velocity.x, 0.0, SPEED)
