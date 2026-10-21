@@ -5,26 +5,26 @@ const JUMP_VELOCITY := 4.5
 const ROTATION_SPEED := 2.0
 
 # Distance minimale du capteur à ultrasons pour déclencher le ramassage (en cm)
-const SEUIL_DISTANCE_RAMASSAGE := 10 
+const SEUIL_DISTANCE_RAMASSAGE := 5 
 
 var gravity : float = ProjectSettings.get_setting("physics/3d/default_gravity")
 
-# Gestion WebSocket & Capteurs
+# Gestion WebSocket (si vous utilisez le pont WebSocket vers le port série)
 var socket = WebSocketPeer.new()
-var object_distance := 999 # Distance renvoyée par le capteur en cm
+var object_distance := 999 
 var button_pressed := false
 
 # Références aux nœuds
 @onready var animation_player: AnimationPlayer = find_child("AnimationPlayer", true, false) as AnimationPlayer
-@onready var pickup_area: Area3D = $PickupArea # Zone de détection devant le joueur
+@onready var pickup_area: Area3D = $PickupArea as Area3D 
 
 var movement_animation_name: String = ""
-var objet_a_portee: Node3D = null # Contient l'objet 3D actuellement proche du joueur
+var objet_a_portee: Node3D = null 
 
 func _ready() -> void:
 	add_to_group("joueur")
 	
-	# Connexion au serveur Python (bridge.py)
+	# Connexion au serveur de pont local WebSocket
 	var err = socket.connect_to_url("ws://localhost:8080")
 	if err != OK:
 		print("Erreur de connexion WebSocket : ", err)
@@ -44,7 +44,6 @@ func _ready() -> void:
 			animation_player.get_animation(movement_animation_name).loop_mode = Animation.LOOP_LINEAR
 
 func _process(_delta: float) -> void:
-	# Traitement des messages WebSocket venus d'Arduino via Python
 	socket.poll()
 	if socket.get_ready_state() == WebSocketPeer.STATE_OPEN:
 		while socket.get_available_packet_count() > 0:
@@ -52,16 +51,15 @@ func _process(_delta: float) -> void:
 			_parse_arduino_data(packet.get_string_from_utf8())
 
 func _parse_arduino_data(data: String) -> void:
-	# Format reçu depuis l'Arduino : "X,Y,SW,Distance" (ex: "512,508,1,8")
+	# Format reçu : "X,Y,SW,Distance" (ex: "512,508,1,4")
 	var parts = data.split(",")
 	if parts.size() >= 4:
 		var sw = parts[2].to_int()
-		object_distance = parts[3].to_int() # Distance du capteur à ultrasons en cm
+		object_distance = parts[3].to_int() 
 		button_pressed = (sw == 0)
 
 		# --- DÉTECTION ULTRASON ET RAMASSAGE D'OBJET ---
-		# Si la main passe devant le capteur (< 10 cm) et qu'un objet 3D est devant le joueur
-		if object_distance <= SEUIL_DISTANCE_RAMASSAGE and objet_a_portee != null:
+		if object_distance > 0 and object_distance <= SEUIL_DISTANCE_RAMASSAGE and objet_a_portee != null:
 			_ramasser_objet(objet_a_portee)
 
 func _physics_process(delta: float) -> void:
@@ -71,16 +69,16 @@ func _physics_process(delta: float) -> void:
 	else:
 		velocity.y = 0.0
 
-	# 2. Saut au clavier (touche Espace) ou via le bouton du joystick si branché
+	# 2. Saut au clavier ou bouton du joystick
 	if (Input.is_action_just_pressed("ui_accept") or button_pressed) and is_on_floor():
 		velocity.y = JUMP_VELOCITY
 
-	# 3. Rotation au clavier (Touches Gauche / Droite ou Q / D)
+	# 3. Rotation au clavier
 	var rotation_input := Input.get_axis("ui_left", "ui_right")
 	rotate_y(-rotation_input * ROTATION_SPEED * delta)
 
-	# 4. Avancer / Reculer au clavier (Touches Haut / Bas ou Z / S)
-	var movement_input := Input.get_axis("ui_down", "ui_up") # Ou ui_up / ui_down selon vos réglages
+	# 4. Avancer / Reculer au clavier
+	var movement_input := Input.get_axis("ui_down", "ui_up")
 	var forward_direction := -transform.basis.z
 
 	if movement_input != 0.0:
@@ -108,13 +106,12 @@ func _on_pickup_area_body_exited(body: Node) -> void:
 func _ramasser_objet(objet: Node3D) -> void:
 	print("OBJET RAMASSÉ ! Distance capteur : ", object_distance, " cm. Objet : ", objet.name)
 	
-	# Suppression de l'objet dans le jeu
 	objet.queue_free()
 	objet_a_portee = null
 	
-	# Envoi du signal à Python/Arduino pour allumer la LED verte
+	# Envoi du signal pour allumer la LED verte
 	if socket.get_ready_state() == WebSocketPeer.STATE_OPEN:
-		socket.send_text("V") 
+		socket.send_text("V")
 
 func _play_movement_animation() -> void:
 	if animation_player and movement_animation_name != "" and animation_player.current_animation != movement_animation_name:
