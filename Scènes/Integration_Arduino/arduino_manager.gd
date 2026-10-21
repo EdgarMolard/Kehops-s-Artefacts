@@ -21,6 +21,7 @@ signal pairing_success(port: String)
 signal pairing_failed()
 signal potentiometre_updated(value: float)                 # trame "potentiometre:<valeur>" (sketch AdaptGodot)
 signal ultrason_updated(value: float)                      # trame "ultrason:<cm>" (sketch AdaptGodot)
+signal luminosite_updated(value: int)                      # trame "luminosite:<0..1023>"
 signal interaction_requested()                             # main sous le seuil ultrason
 signal button_changed(pressed: bool)                       # trame "button:0|1"
 signal sensor_changed(value: int)                          # trame "sensor:<0..1023>" (sketch GODOTSERIAL, capteur A0)
@@ -55,6 +56,7 @@ var timerHeartBeatMax: float = 2.0
 var lastPortNameUsed
 # Dernières valeurs reçues (pour qui préfère lire une variable plutôt qu'écouter un signal)
 var sensor_value: int = 0
+var luminosite_value: int = 0
 var encoder_position: int = 0
 var button_pressed: bool = false
 var _ultrason_in_interaction_range := false
@@ -218,6 +220,9 @@ func _parse_message(msg: String) -> void:
 			_update_ultrason_interaction(distance)
 		"potentiometre":
 			emit_signal("potentiometre_updated", value.to_float())
+		"luminosite":
+			luminosite_value = value.to_int()
+			emit_signal("luminosite_updated", luminosite_value)
 		"button":
 			button_pressed = value == "1"
 			emit_signal("button_changed", button_pressed)
