@@ -4,7 +4,6 @@ var joueur:CharacterBody3D # a changer en Node3D
 
 var no_arduino = false
 
-
 var tresor_1_recupere := false
 var tresor_2_recupere := false
 var tresor_3_recupere := false

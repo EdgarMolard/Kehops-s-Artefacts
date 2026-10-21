@@ -21,6 +21,7 @@ signal pairing_success(port: String)
 signal pairing_failed()
 signal potentiometre_updated(value: float)                 # trame "potentiometre:<valeur>" (sketch AdaptGodot)
 signal ultrason_updated(value: float)                      # trame "ultrason:<cm>" (sketch AdaptGodot)
+signal interaction_requested()                             # main sous le seuil ultrason
 signal button_changed(pressed: bool)                       # trame "button:0|1"
 signal sensor_changed(value: int)                          # trame "sensor:<0..1023>" (sketch GODOTSERIAL, capteur A0)
 signal encoder_changed(position: int, delta: int)          # trame "enc:<position>" (encodeur rotatif)
@@ -39,6 +40,7 @@ const PORT_NAME_HINTS := ["usbmodem", "usbserial", "ttyACM", "ttyUSB", "COM"]
 # même s'il n'apparaît pas dans list_ports(). Pas de fichier de configuration : un fichier oublié
 # empêcherait de retrouver la vraie carte.
 const PORT_OVERRIDE_ENV := "ARDUINO_PORT"
+const INTERACTION_DISTANCE_CM := 25.0
 
 # ── État interne ───────────────────────────────────────
 var serial  # un GdSerial (vraie carte) ou un SerialTcpSimu (simulateur, si ARDUINO_PORT=tcp://...)
@@ -55,6 +57,7 @@ var lastPortNameUsed
 var sensor_value: int = 0
 var encoder_position: int = 0
 var button_pressed: bool = false
+var _ultrason_in_interaction_range := false
 var _debug: bool = OS.get_environment("ARDUINO_DEBUG") == "1"
 
 func _ready() -> void:
@@ -210,7 +213,9 @@ func _parse_message(msg: String) -> void:
 
 	match key:
 		"ultrason":
-			emit_signal("ultrason_updated", value.to_float())
+			var distance := value.to_float()
+			emit_signal("ultrason_updated", distance)
+			_update_ultrason_interaction(distance)
 		"potentiometre":
 			emit_signal("potentiometre_updated", value.to_float())
 		"button":
@@ -231,6 +236,12 @@ func _parse_message(msg: String) -> void:
 			print("[Arduino] Ack : ", value)
 		_:
 			_dbg("[Arduino] Message inconnu : " + msg)
+
+func _update_ultrason_interaction(distance: float) -> void:
+	var in_range := distance > 0.0 and distance <= INTERACTION_DISTANCE_CM
+	if in_range and not _ultrason_in_interaction_range:
+		interaction_requested.emit()
+	_ultrason_in_interaction_range = in_range
 
 # ══ API PUBLIQUE ══════════════════════════════════════
 
