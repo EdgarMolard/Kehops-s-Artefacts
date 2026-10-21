@@ -9,6 +9,7 @@ var recupere := false
 func _ready() -> void:
 	body_entered.connect(_on_body_entered)
 	body_exited.connect(_on_body_exited)
+	ArduinoManager.interaction_requested.connect(_on_interaction_requested)
 
 
 func _on_body_entered(body: Node3D) -> void:
@@ -25,6 +26,9 @@ func _process(_delta: float) -> void:
 	if joueur_proche and Input.is_action_just_pressed("Interagir"):
 		recuperer()
 
+func _on_interaction_requested() -> void:
+	if joueur_proche:
+		recuperer()
 
 func recuperer() -> void:
 	if recupere:
@@ -35,6 +39,7 @@ func recuperer() -> void:
 
 	print("Trésor ", id_tresor, " récupéré")
 
+	ArduinoManager.send_led(true)
 	queue_free()
 	if g_vars.tous_les_tresors_recuperes():
 		print("La salle finale peut être ouverte")

@@ -23,6 +23,7 @@ func _ready() -> void:
 	flame_light.position = flame_light_position
 	interaction_area.body_entered.connect(_on_body_entered)
 	interaction_area.body_exited.connect(_on_body_exited)
+	ArduinoManager.interaction_requested.connect(_on_interaction_requested)
 
 	if starts_lit:
 		_light_torch()
@@ -32,6 +33,11 @@ func _ready() -> void:
 
 func _process(_delta: float) -> void:
 	if player_nearby and Input.is_action_just_pressed("Interagir"):
+		_light_torch()
+
+
+func _on_interaction_requested() -> void:
+	if player_nearby:
 		_light_torch()
 
 

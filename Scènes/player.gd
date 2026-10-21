@@ -10,6 +10,7 @@ var keyboard_dir := Vector2.ZERO
 @onready var animation_player: AnimationPlayer = find_child("AnimationPlayer", true, false) as AnimationPlayer
 var movement_animation_name: String = ""
 
+
 func _on_arduino_message(key: String, value: String) -> void:
 	match key:
 		"joystick_x":
@@ -25,7 +26,7 @@ func _on_arduino_message(key: String, value: String) -> void:
 func _ready() -> void:
 	add_to_group("joueur")
 	ArduinoManager.message_received.connect(_on_arduino_message)
-	
+
 	# Configuration des animations
 	if animation_player == null:
 		push_warning("Aucun AnimationPlayer trouvé dans le modèle du joueur.")
@@ -43,6 +44,7 @@ func _ready() -> void:
 	var animation := animation_player.get_animation(movement_animation_name)
 	animation.loop_mode = Animation.LOOP_LINEAR
 
+
 func _physics_process(delta: float) -> void:
 	keyboard_dir = Input.get_vector("ui_left", "ui_right", "ui_up", "ui_down")
 	var input_dir := joystick_dir
@@ -56,7 +58,6 @@ func _physics_process(delta: float) -> void:
 	var forward_direction := -transform.basis.z
 
 	if abs(input_dir.y) > 0.05:
-
 		velocity.x = forward_direction.x * (-input_dir.y) * SPEED
 		velocity.z = forward_direction.z * (-input_dir.y) * SPEED
 		_play_movement_animation()
@@ -65,8 +66,8 @@ func _physics_process(delta: float) -> void:
 		velocity.z = move_toward(velocity.z, 0.0, SPEED)
 		_stop_movement_animation()
 
-	# 5. Application du mouvement physique
 	move_and_slide()
+
 
 func _play_movement_animation() -> void:
 	if animation_player == null or movement_animation_name == "":
@@ -74,6 +75,7 @@ func _play_movement_animation() -> void:
 
 	if animation_player.current_animation != movement_animation_name:
 		animation_player.play(movement_animation_name)
+
 
 func _stop_movement_animation() -> void:
 	if animation_player == null:

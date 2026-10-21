@@ -10,6 +10,7 @@ var ouverte := false
 func _ready() -> void:
 	zone_interaction.body_entered.connect(_on_body_entered)
 	zone_interaction.body_exited.connect(_on_body_exited)
+	ArduinoManager.interaction_requested.connect(_on_interaction_requested)
 
 	if not animation_player.has_animation("Ouvrir"):
 		push_error("L'animation « ouvrir » est absente de la porte.")
@@ -41,6 +42,15 @@ func _process(_delta: float) -> void:
 		return
 
 	ouvrir()
+
+
+func _on_interaction_requested() -> void:
+	if joueur_proche and not ouverte:
+		if not g_vars.tous_les_tresors_recuperes():
+			print("La porte est verrouillée : les trois trésors sont nécessaires.")
+			return
+
+		ouvrir()
 
 
 func ouvrir() -> void:
