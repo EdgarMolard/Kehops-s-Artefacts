@@ -1,0 +1,11 @@
+[gd_scene format=3 uid="uid://4oca6gigp5km"]
+
+[ext_resource type="PackedScene" uid="uid://dyfgk81dmoin8" path="res://Graphismes/Objets 3D/Artefact v2.1.glb" id="1_38xwt"]
+
+[node name="Artefact v2_1" unique_id=2053282608 instance=ExtResource("1_38xwt")]
+
+[node name="symbol" parent="Sketchfab_model/tombroom_fbx/RootNode" parent_id_path=PackedInt32Array(747041453) index="0" unique_id=1907794698]
+transform = Transform3D(0.070740566, 0, 0, 0, 0.070740566, 0, 0, 0, 0.07074057, 0, 0, 0)
+
+[node name="symbol_Smooth Gold_001_0_002" parent="Sketchfab_model/tombroom_fbx/RootNode/symbol" index="0" unique_id=1209973266]
+transform = Transform3D(1, -5.820766e-09, 2.9802322e-08, 2.3283064e-10, 1, -1.8626451e-09, 2.9802322e-08, 9.313226e-10, 1.0000004, 0, 0, 0)
