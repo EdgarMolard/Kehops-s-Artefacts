@@ -12,6 +12,8 @@ func _ready() -> void:
 	StatusDot.modulate = Color.RED
 	StatusLabel.text = "Arduino Pas Connectée"
 	StartButton.disabled = true
+	if ArduinoManager.paired_port != "":
+		_on_arduino_connected()
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
