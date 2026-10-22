@@ -94,10 +94,10 @@ transform = Transform3D(-1.3113416e-07, 0, 3, 0, 3, 0, -3, 0, -1.3113416e-07, 4.
 environment = SubResource("Environment_148hs")
 
 [node name="Torche2" parent="." unique_id=1985557068 instance=ExtResource("6_m3e2f")]
-transform = Transform3D(-6.556708e-08, 0, 1.5, 0, 1.5, 0, -1.5, 0, -6.556708e-08, 53.249523, -1.0886011, 43.410248)
+transform = Transform3D(-6.556708e-08, 0, 1.5, 0, 1.5, 0, -1.5, 0, -6.556708e-08, 53.249523, -1.0886011, 42.41283)
 
 [node name="Torche" parent="." unique_id=2116154897 instance=ExtResource("6_m3e2f")]
-transform = Transform3D(-1.5, 0, -2.2649371e-07, 0, 1.5, 0, 2.2649371e-07, 0, -1.5, 35.044895, -1.2209842, 15.11701)
+transform = Transform3D(-1.5, 0, -2.2649371e-07, 0, 1.5, 0, 2.2649371e-07, 0, -1.5, 34.49785, -1.2209842, 15.11701)
 
 [node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=919424488]
 script = ExtResource("7_u6rje")
@@ -115,7 +115,7 @@ horizontal_alignment = 1
 vertical_alignment = 2
 
 [node name="Torche3" parent="." unique_id=1263703455 instance=ExtResource("6_m3e2f")]
-transform = Transform3D(1.5, 0, 0, 0, 1.5, 0, 0, 0, 1.5, 18.457115, -1.1115968, 64.05193)
+transform = Transform3D(1.5, 0, 0, 0, 1.5, 0, 0, 0, 1.5, 19.353563, -1.1115968, 64.05193)
 
 [node name="Torche4" parent="." unique_id=2119286251 instance=ExtResource("6_m3e2f")]
 transform = Transform3D(1.5, 0, 0, 0, 1.5, 0, 0, 0, 1.5, -6.6312847, -1.1115968, 58.099262)
