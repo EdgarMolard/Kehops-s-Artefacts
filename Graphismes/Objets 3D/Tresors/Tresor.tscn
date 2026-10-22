@@ -7,6 +7,11 @@
 [node name="Tresor" type="Area3D" unique_id=1136815373]
 script = ExtResource("1_fse2q")
 
+[node name="ProximitySound" type="FmodEventEmitter3D" parent="."]
+event_name = "event:/WalkingSound"
+autoplay = false
+auto_release = false
+
 [node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1318787281]
 transform = Transform3D(10, 0, 0, 0, 10, 0, 0, 0, 10, 0, 0, 0)
 shape = SubResource("SphereShape3D_wruui")
