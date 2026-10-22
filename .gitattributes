@@ -2,3 +2,6 @@
 * text=auto eol=lf
 *.glb filter=lfs diff=lfs merge=lfs -text
 Maps/Laby/*.tscn filter=lfs diff=lfs merge=lfs -text
+Maps/Laby/*.png filter=lfs diff=lfs merge=lfs -text
+Maps/Laby/*.jpg filter=lfs diff=lfs merge=lfs -text
+Maps/Laby/*.jpeg filter=lfs diff=lfs merge=lfs -text
