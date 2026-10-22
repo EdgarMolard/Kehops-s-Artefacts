@@ -3,9 +3,15 @@
 [ext_resource type="Script" uid="uid://bida8s45pasu6" path="res://Scènes/player.gd" id="1_nr7os"]
 [ext_resource type="PackedScene" uid="uid://dd8ax83ymrmuh" path="res://Graphismes/Player/scene.gltf" id="2_8tp81"]
 [ext_resource type="PackedScene" uid="uid://yk0ird8cl61s" path="res://Graphismes/Objets 3D/Tresors/Tresor.tscn" id="4_7ko82"]
+[ext_resource type="PackedScene" uid="uid://4oca6gigp5km" path="res://Graphismes/Objets 3D/artefact_v_2_1.tscn" id="4_ydf0g"]
 [ext_resource type="PackedScene" uid="uid://dcktsuoy7nr5u" path="res://Graphismes/Objets 3D/Porte.tscn" id="5_k0ied"]
+[ext_resource type="PackedScene" uid="uid://brvr7mhjhgtcx" path="res://Graphismes/Objets 3D/horus.tscn" id="5_mku1j"]
+[ext_resource type="PackedScene" uid="uid://bdcvmi8k8i1cg" path="res://Graphismes/Objets 3D/khepri.tscn" id="6_a37cf"]
 [ext_resource type="PackedScene" uid="uid://ceefgjqvnlapu" path="res://Graphismes/Objets 3D/Lumières/Torche.tscn" id="6_m3e2f"]
+[ext_resource type="PackedScene" uid="uid://casfajyayefr4" path="res://Maps/Laby/kehops_finale_full_model.tscn" id="7_pbjh3"]
 [ext_resource type="Script" uid="uid://bc4r64vdmhw8k" path="res://Scènes/interaction_ui.gd" id="7_u6rje"]
+[ext_resource type="FontFile" uid="uid://dfdr5jbrwdoiw" path="res://Graphismes/Dalek.ttf" id="7_x2db2"]
+[ext_resource type="PackedScene" uid="uid://d0q6vhhtk88oa" path="res://Graphismes/Objets 3D/chat.tscn" id="12_mku1j"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_148hs"]
 
@@ -33,21 +39,31 @@ transform = Transform3D(-0.005, 0, -4.3711387e-10, 0, 0.005, 0, 4.3711387e-10, 0
 [node name="PlayerLight" type="OmniLight3D" parent="Player" unique_id=721355224]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.6, 0)
 light_color = Color(1, 0.85490197, 0.4627451, 1)
-omni_range = 6.0
+light_energy = 0.6
+omni_range = 3.0
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="." unique_id=1572427533]
 transform = Transform3D(0.8660254, 0.43301272, -0.24999999, 0, 0.49999997, 0.86602545, 0.5, -0.75, 0.43301266, 0, 0, 0)
+visible = false
 
 [node name="Tresor" parent="." unique_id=1136815373 instance=ExtResource("4_7ko82")]
 transform = Transform3D(-0.3, 0, -4.5298744e-08, 0, 0.3, 0, 4.5298744e-08, 0, -0.3, 32.79151, -0.49631363, 7.2304864)
+
+[node name="Artefact v2_1" parent="Tresor/Modele" parent_id_path=PackedInt32Array(1136815373, 1915152410) index="0" unique_id=2053282608 instance=ExtResource("4_ydf0g")]
 
 [node name="Tresor2" parent="." unique_id=619824277 instance=ExtResource("4_7ko82")]
 transform = Transform3D(-1.3113417e-08, 0, 0.3, 0, 0.3, 0, -0.3, 0, -1.3113417e-08, 61.1937, -0.5434909, 40.463055)
 id_tresor = 2
 
+[node name="Sketchfab_Scene" parent="Tresor2/Modele" parent_id_path=PackedInt32Array(619824277, 1915152410) index="0" unique_id=378791540 instance=ExtResource("5_mku1j")]
+transform = Transform3D(3.999999, -4.2632564e-14, 3.3881318e-21, 0, -1.7484552e-07, -3.999999, 4.2632564e-14, 3.999999, -1.7484552e-07, -0.07846069, -11.457414, -2.2430573)
+
 [node name="Tresor3" parent="." unique_id=336927923 instance=ExtResource("4_7ko82")]
 transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 21.21867, -0.5492486, 72.034065)
 id_tresor = 3
+
+[node name="Sketchfab_Scene" parent="Tresor3/Modele" parent_id_path=PackedInt32Array(336927923, 1915152410) index="0" unique_id=216575593 instance=ExtResource("6_a37cf")]
+transform = Transform3D(-7.590405e-09, -0.17364822, 0.9848077, 0.9999998, -4.371138e-08, 0, 4.304731e-08, 0.9848077, 0.17364822, 0, 0.3137318, -1.6330109)
 
 [node name="Porte" parent="." unique_id=671626376 instance=ExtResource("5_k0ied")]
 transform = Transform3D(-1.3113416e-07, 0, 3, 0, 3, 0, -3, 0, -1.3113416e-07, 4.163615, 2.863338, 62.17901)
@@ -70,6 +86,9 @@ offset_left = 760.0
 offset_top = 900.0
 offset_right = 1160.0
 offset_bottom = 960.0
+theme_override_colors/font_color = Color(0, 0.6666667, 0.5686275, 1)
+theme_override_fonts/font = ExtResource("7_x2db2")
+theme_override_font_sizes/font_size = 64
 horizontal_alignment = 1
 vertical_alignment = 2
 
@@ -78,3 +97,23 @@ transform = Transform3D(1.5, 0, 0, 0, 1.5, 0, 0, 0, 1.5, 18.457115, -1.1115968, 
 
 [node name="Torche4" parent="." unique_id=2119286251 instance=ExtResource("6_m3e2f")]
 transform = Transform3D(1.5, 0, 0, 0, 1.5, 0, 0, 0, 1.5, -6.6312847, -1.1115968, 58.099262)
+
+[node name="Torche5" parent="." unique_id=1151146610 instance=ExtResource("6_m3e2f")]
+transform = Transform3D(1.5, 0, 0, 0, 1.4995233, -0.037815556, 0, 0.037815556, 1.4995233, 0.19899845, -1.1025088, 57.90414)
+
+[node name="Kehops FINALE full model" parent="." unique_id=1587112832 instance=ExtResource("7_pbjh3")]
+transform = Transform3D(3, 0, 0, 0, 3, 0, 0, 0, 3, 0, 0, 0)
+
+[node name="Tresor4" parent="." unique_id=2100979969 instance=ExtResource("4_7ko82")]
+transform = Transform3D(-0.44287097, 0, -0.232089, 0, 0.5, 0, 0.232089, 0, -0.44287097, -14.774623, -1.700369, 60.839146)
+id_tresor = 4
+
+[node name="CollisionShape3D" parent="Tresor4" index="0" unique_id=1318787281]
+transform = Transform3D(25, 0, 0, 0, 25, 0, 0, 0, 25, 0, 0, 0)
+
+[node name="chat" parent="Tresor4/Modele" parent_id_path=PackedInt32Array(2100979969, 1915152410) index="0" unique_id=257533361 instance=ExtResource("12_mku1j")]
+
+[editable path="Tresor"]
+[editable path="Tresor2"]
+[editable path="Tresor3"]
+[editable path="Tresor4"]

@@ -53,6 +53,7 @@ func _physics_process(delta: float) -> void:
 	if not is_zero_approx(keyboard_dir.y):
 		input_dir.y = keyboard_dir.y
 
+
 	rotate_y(-input_dir.x * ROTATION_SPEED * delta)
 
 	var forward_direction := -transform.basis.z

@@ -1,7 +1,7 @@
 extends Area3D
 
 @export var id_tresor: int = 1
-
+@export var modele: PackedScene
 var joueur_proche := false
 var recupere := false
 var interaction_ui: InteractionUI

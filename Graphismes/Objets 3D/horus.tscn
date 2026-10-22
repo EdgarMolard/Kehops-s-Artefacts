@@ -1,0 +1,5 @@
+[gd_scene format=3 uid="uid://brvr7mhjhgtcx"]
+
+[ext_resource type="PackedScene" uid="uid://cd2476q81pnee" path="res://Graphismes/Objets 3D/oeil_dhorus_84.9.122.glb" id="1_lehf8"]
+
+[node name="Sketchfab_Scene" unique_id=378791540 instance=ExtResource("1_lehf8")]

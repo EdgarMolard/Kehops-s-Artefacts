@@ -1,7 +1,6 @@
 [gd_scene format=3 uid="uid://yk0ird8cl61s"]
 
 [ext_resource type="Script" uid="uid://h5rihlv2yanl" path="res://Graphismes/Objets 3D/Tresors/recup_tresors.gd" id="1_fse2q"]
-[ext_resource type="PackedScene" uid="uid://4oca6gigp5km" path="res://Graphismes/Objets 3D/artefact_v_2_1.tscn" id="2_vefmd"]
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_wruui"]
 
@@ -9,7 +8,7 @@
 script = ExtResource("1_fse2q")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1318787281]
-transform = Transform3D(4, 0, 0, 0, 4, 0, 0, 0, 4, 0, 0, 0)
+transform = Transform3D(10, 0, 0, 0, 10, 0, 0, 0, 10, 0, 0, 0)
 shape = SubResource("SphereShape3D_wruui")
 
-[node name="Artefact v2_1" parent="." unique_id=2053282608 instance=ExtResource("2_vefmd")]
+[node name="Modele" type="Node3D" parent="." unique_id=1915152410]

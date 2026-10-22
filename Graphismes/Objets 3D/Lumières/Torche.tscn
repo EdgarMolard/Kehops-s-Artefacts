@@ -91,8 +91,8 @@ skeleton = NodePath("")
 [node name="FlameLight" type="OmniLight3D" parent="." unique_id=2097066742]
 visible = false
 light_color = Color(1, 0.57254905, 0.20392157, 1)
-omni_range = 10.0
-omni_attenuation = 0.5
+light_energy = 2.0
+omni_range = 20.0
 
 [node name="InteractionArea" type="Area3D" parent="." unique_id=1499567866]
 transform = Transform3D(3, 0, 0, 0, 3, 0, 0, 0, 3, 0, 0, 0)

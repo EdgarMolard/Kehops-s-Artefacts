@@ -1,0 +1,12 @@
+[gd_scene format=3 uid="uid://d0q6vhhtk88oa"]
+
+[ext_resource type="PackedScene" uid="uid://dygl6iebgxtse" path="res://Graphismes/Objets 3D/chat.glb" id="1_u5esr"]
+[ext_resource type="Texture2D" uid="uid://c0avpwlagjc37" path="res://Graphismes/Objets 3D/oeil_dhorus_84.9_2.png" id="2_jas1d"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_eiw6h"]
+albedo_texture = ExtResource("2_jas1d")
+
+[node name="chat" unique_id=257533361 instance=ExtResource("1_u5esr")]
+
+[node name="Cone" parent="." index="0" unique_id=1386849909]
+material_override = SubResource("StandardMaterial3D_eiw6h")
