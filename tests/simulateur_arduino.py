@@ -186,6 +186,11 @@ def main():
                     key, value = cmd.split(":", 1)
                     if key == "led":
                         send("ack:led:" + value)
+                    elif key == "artefact":
+                        send("ack:artefact:" + value)
+                    elif key == "proximite":
+                        artifact_id, near = value.split(":", 1)
+                        send("ack:proximite:" + artifact_id + ":" + near)
                     elif key == "blink":
                         send("ack:blink:" + value)
                     elif key == "ping":

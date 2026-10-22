@@ -17,6 +17,27 @@ unsigned long lastSendTime = 0;
 const unsigned long SEND_INTERVAL = 50;
 bool lastButtonState = false;
 int nbLed = 0;
+const unsigned long ARTIFACT_BLINK_INTERVAL = 300;
+bool artifactNear[3] = {false, false, false};
+bool artifactCollected[3] = {false, false, false};
+bool artifactControlled[3] = {false, false, false};
+bool artifactBlinkPhase = false;
+unsigned long lastArtifactBlinkTime = 0;
+
+void updateArtifactLeds() {
+  unsigned long now = millis();
+  if (now - lastArtifactBlinkTime >= ARTIFACT_BLINK_INTERVAL) {
+    lastArtifactBlinkTime = now;
+    artifactBlinkPhase = !artifactBlinkPhase;
+  }
+
+  const int ledPins[] = {LED1_PIN, LED2_PIN, LED3_PIN};
+  for (int i = 0; i < 3; i++) {
+    if (!artifactControlled[i]) continue;
+    bool ledOn = artifactCollected[i] || (artifactNear[i] && artifactBlinkPhase);
+    digitalWrite(ledPins[i], ledOn ? HIGH : LOW);
+  }
+}
 
 // ── Moyenne glissante ultrason ─────────────────
 const int WINDOW_SIZE = 5;
@@ -107,6 +128,7 @@ void setup() {
   for (int i = 0; i < WINDOW_SIZE; i++) {
     ultrasonBuffer[i] = 0;
   }
+  lastArtifactBlinkTime = millis();
 
   while (!paired) {
     if (Serial.available() > 0) {
@@ -121,6 +143,7 @@ void setup() {
 }
 
 void loop() {
+  updateArtifactLeds();
   if (Serial.available() > 0) {
     String cmd = Serial.readStringUntil('\n');
     cmd.trim();
@@ -174,6 +197,33 @@ void parseCommand(const String& cmd) {
         nbLed = 0;
         break;
     }
+  }
+  else if (key == "artefact") {
+    int idArtefact = value.toInt();
+    if (idArtefact >= 1 && idArtefact <= 3) {
+      int index = idArtefact - 1;
+      artifactControlled[index] = true;
+      artifactCollected[index] = true;
+      artifactNear[index] = false;
+      updateArtifactLeds();
+      Serial.println("ack:artefact:" + String(idArtefact));
+    }
+  }
+  else if (key == "proximite") {
+    int separator = value.indexOf(':');
+    if (separator == -1) return;
+
+    int idArtefact = value.substring(0, separator).toInt();
+    String nearValue = value.substring(separator + 1);
+    if (idArtefact < 1 || idArtefact > 3 || (nearValue != "0" && nearValue != "1")) return;
+
+    int index = idArtefact - 1;
+    artifactControlled[index] = true;
+    if (!artifactCollected[index]) {
+      artifactNear[index] = nearValue == "1";
+      updateArtifactLeds();
+    }
+    Serial.println("ack:proximite:" + String(idArtefact) + ":" + nearValue);
   }
   else if(key == "vibe"){
       // value est un texte : "0" n'est pas faux, il faut le comparer à "1"

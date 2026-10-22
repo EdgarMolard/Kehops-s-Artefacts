@@ -72,6 +72,8 @@ Le bouton n'est **pas anti-rebondi** côté Arduino : un appui peut produire `bu
 | Fonction GDScript (`ArduinoManager.…`) | Ligne envoyée | Effet dans `GODOTSERIAL.ino` | Effet dans `AdaptGodot.ino` |
 |---|---|---|---|
 | `send_led(true/false)` | `led:1` / `led:0` | LED 13 allumée/éteinte, répond `ack:led:x` | allume la LED suivante (1, 2 puis 3) ; à la 3ᵉ, bloque 3 s puis éteint tout |
+| `send_artifact(id)` | `artefact:<1..3>` | non pris en charge | allume durablement la LED de l'artefact (1 → pin 13, 2 → pin 5, 3 → pin 6), répond `ack:artefact:<id>` |
+| `send_artifact_near(id, near)` | `proximite:<id>:<0\|1>` | fait clignoter la LED correspondante tant que proche, répond `ack:proximite:<id>:<0\|1>` | fait clignoter la LED correspondante tant que proche, répond `ack:proximite:<id>:<0\|1>` |
 | `send_blink(n)` | `blink:<n>` | fait clignoter la LED n fois (**bloquant** : 200 ms par clignotement, aucune trame envoyée pendant ce temps) | rien |
 | `send_ping()` | `ping:<ms>` | répond `pong:<ms>` | répond `pong:<ms>` |
 | (pas de fonction) | `vibe:<x>` | rien | vibreur pin 10 |

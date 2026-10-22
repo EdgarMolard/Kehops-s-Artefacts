@@ -13,6 +13,8 @@ var _t := 0.0
 var _nb := {"sensor": 0, "button": 0, "enc": 0, "autres": 0}
 var _connecte_a := -1.0
 var _ping_envoye := false
+var _artefact_ack := false
+var _proximite_ack := false
 var _fini := false
 
 func _ready() -> void:
@@ -22,7 +24,15 @@ func _ready() -> void:
 	ArduinoManager.button_changed.connect(func(p): _nb["button"] += 1; print("[TEST] button_changed ", p))
 	ArduinoManager.sensor_changed.connect(func(v): _nb["sensor"] += 1; if _nb["sensor"] % 20 == 1: print("[TEST] sensor_changed ", v))
 	ArduinoManager.encoder_changed.connect(func(pos, d): _nb["enc"] += 1; print("[TEST] encoder_changed position=", pos, " delta=", d))
-	ArduinoManager.message_received.connect(func(k, v): if not k in ["sensor", "button", "enc"]: _nb["autres"] += 1; print("[TEST] message ", k, ":", v))
+	ArduinoManager.message_received.connect(func(k, v):
+		if not k in ["sensor", "button", "enc"]:
+			_nb["autres"] += 1
+			print("[TEST] message ", k, ":", v)
+		if k == "ack" and v == "artefact:2":
+			_artefact_ack = true
+		if k == "ack" and v == "proximite:2:1":
+			_proximite_ack = true
+	)
 
 func _process(delta: float) -> void:
 	_t += delta
@@ -30,10 +40,14 @@ func _process(delta: float) -> void:
 		_ping_envoye = true
 		ArduinoManager.send_ping()
 		ArduinoManager.send_led(true)
+		ArduinoManager.send_artifact_near(2, true)
+		ArduinoManager.send_artifact(2)
 		ArduinoManager.send_blink(2)
 	if _t >= DUREE and not _fini:
 		_fini = true
 		print("[TEST] BILAN apparie=", _connecte_a >= 0.0, " port=", ArduinoManager.paired_port,
+			" ack_artefact_2=", _artefact_ack,
+			" ack_proximite_2=", _proximite_ack,
 			" sensor=", _nb["sensor"], " button=", _nb["button"], " enc=", _nb["enc"], " autres=", _nb["autres"],
 			" derniere_valeur_sensor=", ArduinoManager.sensor_value, " position_enc=", ArduinoManager.encoder_position)
-		get_tree().quit(0 if _connecte_a >= 0.0 else 1)
+		get_tree().quit(0 if _connecte_a >= 0.0 and _artefact_ack and _proximite_ack else 1)

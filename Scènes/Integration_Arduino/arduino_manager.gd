@@ -253,6 +253,18 @@ func _update_ultrason_interaction(distance: float) -> void:
 func send_led(on: bool) -> void:
 	_send("led:" + ("1" if on else "0"))
 
+func send_artifact(id: int) -> void:
+	if id < 1 or id > 3:
+		push_error("Identifiant d'artefact invalide pour l'Arduino : " + str(id))
+		return
+	_send("artefact:" + str(id))
+
+func send_artifact_near(id: int, near: bool) -> void:
+	if id < 1 or id > 3:
+		push_error("Identifiant d'artefact invalide pour l'Arduino : " + str(id))
+		return
+	_send("proximite:" + str(id) + ":" + ("1" if near else "0"))
+
 func send_blink(times: int) -> void:
 	_send("blink:" + str(times))
 
