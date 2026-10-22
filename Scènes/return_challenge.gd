@@ -19,13 +19,16 @@ var chrono_message: Label
 var chrono_label: Label
 
 func _enter_tree() -> void:
+	# Chaque nouvelle partie recommence avec les quatre trésors non récupérés.
 	g_vars.reinitialiser_progression()
 
 func _ready() -> void:
+	# Le défi ne démarre qu'après la récupération du quatrième trésor.
 	g_vars.tresor_4_recupere_signal.connect(_demarrer_defi_retour)
 	_creer_hud_chrono()
 
 func _process(delta: float) -> void:
+	# Tant que le défi n'est pas actif, le joueur n'est pas encore chronométré.
 	if not defi_actif or defi_termine or joueur == null:
 		return
 
@@ -34,6 +37,7 @@ func _process(delta: float) -> void:
 	_actualiser_volume_vent()
 
 	if joueur.global_position.distance_to(POINT_DEPART) <= rayon_zone_retour:
+		# Atteindre l'entrée avant la fin du compte à rebours valide le défi.
 		_afficher_resultat(true)
 	elif is_zero_approx(temps_restant):
 		_afficher_resultat(false)
@@ -43,6 +47,7 @@ func _demarrer_defi_retour() -> void:
 		return
 	defi_actif = true
 	temps_restant = DUREE_RETOUR
+	# Le message et le vent rendent le début du défi immédiatement visible et audible.
 	chrono_label.visible = true
 	chrono_message.visible = true
 	if vent != null:
@@ -55,6 +60,7 @@ func _actualiser_volume_vent() -> void:
 		return
 	var distance := joueur.global_position.distance_to(POINT_DEPART)
 	var progression := clampf(distance / maxf(distance_froide_max, 0.1), 0.0, 1.0)
+	# Plus le joueur s'éloigne de l'entrée, plus le vent devient discret.
 	vent.set_volume(lerpf(volume_chaud, volume_froid, progression))
 
 func _actualiser_affichage_chrono() -> void:
@@ -65,6 +71,7 @@ func _actualiser_affichage_chrono() -> void:
 		]
 
 func _creer_hud_chrono() -> void:
+	# Le HUD est créé par code pour rester indépendant de la scène de jeu.
 	var couche := CanvasLayer.new()
 	couche.layer = 10
 	add_child(couche)
@@ -97,6 +104,7 @@ func _afficher_resultat(reussi: bool) -> void:
 		return
 	defi_termine = true
 	defi_actif = false
+	# Le vent et le compte à rebours doivent disparaître avant l'écran final.
 	if vent != null:
 		vent.stop()
 	if chrono_label != null:

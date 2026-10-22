@@ -1,5 +1,6 @@
 extends Node3D
 
+# Paramètres de la musique ou du son configurés depuis l'inspecteur Godot.
 @export var Son_A_Jouer:AudioStream
 @export var Autoplay:bool = false
 @export var Spatialiser:bool = false
@@ -10,7 +11,7 @@ extends Node3D
 @export var LayeringBeat:float = 0
 @export var Master:String = "Master"
 
-# TODO Fonction déclencheur
+# TODO Fonction déclencheur: utiliser ces paramètres pour lancer le son.
 
 #@export_enum("Master", "Voice") var audio_bus_name: String = "Master"
 #func _ready() -> void:

@@ -12,6 +12,7 @@ var interaction_ui: InteractionUI
 @onready var pickup_sound = get_node_or_null("PickupSound")
 
 func _ready() -> void:
+	# Les connexions sont faites ici pour que chaque trésor gère seul ses interactions.
 	add_to_group("tresors")
 	interaction_ui = get_parent().get_node_or_null("CanvasLayer") as InteractionUI
 	body_entered.connect(_on_body_entered)
@@ -35,6 +36,7 @@ func _on_body_exited(body: Node3D) -> void:
 
 
 func _process(_delta: float) -> void:
+	# Le joueur peut utiliser le clavier ou demander l'interaction via Arduino.
 	if joueur_proche and Input.is_action_just_pressed("Interagir"):
 		recuperer()
 	if not recupere and _is_next_treasure() and proximity_sound != null:
@@ -49,6 +51,7 @@ func recuperer() -> void:
 		return
 
 	recupere = true
+	# L'état est verrouillé avant les effets pour empêcher une double récupération.
 	if interaction_ui != null:
 		interaction_ui.hide_prompt(self)
 	_marquer_comme_recupere()
@@ -58,8 +61,10 @@ func recuperer() -> void:
 	print("Trésor ", id_tresor, " récupéré")
 
 	if id_tresor >= 1 and id_tresor <= 3:
+		# Les trois premiers trésors font avancer l'indication lumineuse Arduino.
 		ArduinoManager.send_led(true)
 	elif id_tresor == 4:
+		# Le quatrième trésor lance le défi de retour vers l'entrée.
 		g_vars.tresor_4_recupere = true
 		g_vars.tresor_4_recupere_signal.emit()
 	queue_free()
@@ -71,6 +76,7 @@ func recuperer() -> void:
 
 
 func _refresh_proximity_sound() -> void:
+	# Un seul trésor à la fois signale la prochaine étape de la progression.
 	if recupere:
 		_stop_proximity_sound()
 	elif _is_next_treasure():
@@ -83,6 +89,7 @@ func _refresh_proximity_sound() -> void:
 
 
 func _is_next_treasure() -> bool:
+	# La collecte est volontairement séquentielle pour guider le joueur.
 	match id_tresor:
 		1:
 			return not g_vars.tresor_1_recupere
@@ -111,6 +118,7 @@ func _actualiser_volume_proximite() -> void:
 		return
 	var distance := global_position.distance_to(joueur.global_position)
 	var progression := clampf(distance / maxf(distance_froide_max, 0.1), 0.0, 1.0)
+	# Le son diminue progressivement lorsque le joueur s'éloigne du trésor.
 	var volume := lerpf(1.0, volume_froid, progression)
 	proximity_sound.set_volume(volume)
 
@@ -141,6 +149,7 @@ func _detacher_son_ramassage() -> void:
 	if scene == null:
 		return
 	var sound = pickup_sound
+	# Le son est déplacé dans la scène avant la suppression du trésor.
 	sound.reparent(scene, true)
 	sound.play()
 	get_tree().create_timer(maxf(duree_son_ramassage, 0.1)).timeout.connect(

@@ -14,6 +14,7 @@ var movement_sound_active := false
 
 
 func _on_arduino_message(key: String, value: String) -> void:
+	# Les axes Arduino sont convertis dans l'intervalle utilisé par le déplacement.
 	match key:
 		"joystick_x":
 			joystick_dir.x = remap(value.to_float(), 0.0, 1023.0, -1.0, 1.0)
@@ -44,10 +45,12 @@ func _ready() -> void:
 		return
 
 	var animation := animation_player.get_animation(movement_animation_name)
+	# Une boucle évite que l'animation de marche ne s'arrête pendant le déplacement.
 	animation.loop_mode = Animation.LOOP_LINEAR
 
 
 func _physics_process(delta: float) -> void:
+	# Le clavier complète le joystick et remplace seulement ses axes actifs.
 	keyboard_dir = Input.get_vector("Gauche", "Droite", "Avancer", "Reculer")
 	if keyboard_dir.is_zero_approx():
 		keyboard_dir = Input.get_vector("ui_left", "ui_right", "ui_up", "ui_down")
@@ -60,6 +63,7 @@ func _physics_process(delta: float) -> void:
 
 	rotate_y(-input_dir.x * ROTATION_SPEED * delta)
 
+	# L'axe vertical avance dans la direction où regarde le personnage.
 	var forward_direction := -transform.basis.z
 
 	if abs(input_dir.y) > 0.05:
@@ -81,6 +85,7 @@ func _play_movement_animation() -> void:
 		return
 
 	if animation_player.current_animation != movement_animation_name:
+		# Ne relance pas l'animation à chaque image, seulement lors de son changement.
 		animation_player.play(movement_animation_name)
 
 

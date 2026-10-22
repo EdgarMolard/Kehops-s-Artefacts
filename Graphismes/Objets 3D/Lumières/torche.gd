@@ -15,6 +15,7 @@ var interaction_ui: InteractionUI
 
 
 func _ready() -> void:
+	# La torche écoute à la fois l'interaction clavier et la luminosité du capteur.
 	interaction_ui = get_parent().get_node_or_null("CanvasLayer") as InteractionUI
 	if flame_light == null:
 		push_error("Torche : le nœud FlameLight est introuvable.")
@@ -31,21 +32,25 @@ func _ready() -> void:
 	if starts_lit:
 		_light_torch()
 	else:
+		# Une torche éteinte reste invisible jusqu'à son activation.
 		flame_light.visible = false
 
 
 func _process(_delta: float) -> void:
+	# Le joueur doit être à proximité pour pouvoir allumer la torche au clavier.
 	if player_nearby and Input.is_action_just_pressed("Interagir"):
 		_light_torch()
 
 
 func _on_luminosite_updated(value: int) -> void:
+	# Une lumière Arduino suffisante simule l'allumage de la torche.
 	if player_nearby and value >= luminosity_threshold:
 		_light_torch()
 
 func _on_body_entered(body: Node3D) -> void:
 	if body.is_in_group("joueur"):
 		player_nearby = true
+		# L'invite n'est affichée que si la torche n'est pas déjà allumée.
 		if not is_lit and interaction_ui != null:
 			interaction_ui.show_prompt(self, "E — Allumer")
 
@@ -61,6 +66,7 @@ func _light_torch() -> void:
 		return
 
 	is_lit = true
+	# L'activation est irréversible pour cette instance et notifie les autres systèmes.
 	if interaction_ui != null:
 		interaction_ui.hide_prompt(self)
 	flame_light.visible = true
