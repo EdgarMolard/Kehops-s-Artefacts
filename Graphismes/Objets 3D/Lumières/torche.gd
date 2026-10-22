@@ -4,6 +4,7 @@ signal activated
 
 @export var starts_lit := false
 @export var flame_light_position := Vector3(0.0, 1.5, 0.0)
+@export_range(0, 1023, 1) var luminosity_threshold := 500
 
 @onready var flame_light: OmniLight3D = $FlameLight
 @onready var interaction_area: Area3D = $InteractionArea
@@ -26,6 +27,7 @@ func _ready() -> void:
 	interaction_area.body_entered.connect(_on_body_entered)
 	interaction_area.body_exited.connect(_on_body_exited)
 	ArduinoManager.interaction_requested.connect(_on_interaction_requested)
+	ArduinoManager.luminosite_updated.connect(_on_luminosite_updated)
 
 	if starts_lit:
 		_light_torch()
@@ -46,6 +48,7 @@ func _on_interaction_requested() -> void:
 func _on_body_entered(body: Node3D) -> void:
 	if body.is_in_group("joueur"):
 		player_nearby = true
+		_try_light_from_sensor(ArduinoManager.luminosite_value)
 
 		if not is_lit:
 			if interaction_ui != null:
@@ -57,6 +60,15 @@ func _on_body_exited(body: Node3D) -> void:
 		player_nearby = false
 		if interaction_ui != null:
 			interaction_ui.hide_prompt(self)
+
+
+func _on_luminosite_updated(value: int) -> void:
+	_try_light_from_sensor(value)
+
+
+func _try_light_from_sensor(value: int) -> void:
+	if player_nearby and value >= luminosity_threshold:
+		_light_torch()
 
 
 func _light_torch() -> void:
