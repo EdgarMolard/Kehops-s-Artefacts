@@ -9,6 +9,7 @@ script = ExtResource("1_fse2q")
 
 [node name="ProximitySound" type="FmodEventEmitter3D" parent="."]
 event_name = "event:/WalkingSound"
+event_guid = "{823920e1-28b1-46ce-a882-7ca531b9a868}"
 autoplay = false
 auto_release = false
 
