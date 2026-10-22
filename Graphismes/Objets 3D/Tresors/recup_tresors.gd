@@ -46,7 +46,8 @@ func recuperer() -> void:
 
 	print("Trésor ", id_tresor, " récupéré")
 
-	ArduinoManager.send_led(true)
+	if id_tresor >= 1 and id_tresor <= 3:
+		ArduinoManager.send_led(true)
 	queue_free()
 	if g_vars.tous_les_tresors_recuperes():
 		print("La salle finale peut être ouverte")
