@@ -1,5 +1,7 @@
 extends Node
 
+signal tresor_4_recupere_signal
+
 var joueur:CharacterBody3D # a changer en Node3D
 
 var no_arduino = false
@@ -7,6 +9,13 @@ var no_arduino = false
 var tresor_1_recupere := false
 var tresor_2_recupere := false
 var tresor_3_recupere := false
+var tresor_4_recupere := false
+
+func reinitialiser_progression() -> void:
+	tresor_1_recupere = false
+	tresor_2_recupere = false
+	tresor_3_recupere = false
+	tresor_4_recupere = false
 
 func tous_les_tresors_recuperes() -> bool:
 	return (

@@ -2,6 +2,7 @@ extends Node3D
 
 @onready var zone_interaction: Area3D = $ZoneInteraction
 @onready var animation_player: AnimationPlayer = $AnimationPlayer
+@onready var door_sound = $DoorSound
 
 var joueur_proche := false
 var ouverte := false
@@ -74,5 +75,7 @@ func ouvrir() -> void:
 	ouverte = true
 	if interaction_ui != null:
 		interaction_ui.hide_prompt(self)
+	if door_sound.event_name != "":
+		door_sound.play()
 	animation_player.play("Ouvrir")
 	print("La porte s'ouvre")

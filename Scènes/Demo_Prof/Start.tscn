@@ -1,6 +1,7 @@
 [gd_scene format=3 uid="uid://b1nnjj6bwalt8"]
 
 [ext_resource type="Script" uid="uid://bq8183gwv1u68" path="res://Scènes/Demo_Prof/start_screen.gd" id="1_4vysu"]
+[ext_resource type="FontFile" uid="uid://dfdr5jbrwdoiw" path="res://Graphismes/Dalek.ttf" id="2_dalek"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_og4jd"]
 corner_radius_top_left = 50
@@ -11,11 +12,24 @@ corner_radius_bottom_left = 50
 [node name="StartScreen" type="Node2D" unique_id=1676421136]
 script = ExtResource("1_4vysu")
 
+[node name="FmodBankLoader" type="FmodBankLoader" parent="." unique_id=180580002]
+bank_paths = ["res://Sons & musiques/Fichiers FMOD/FmodBank/Desktop/Master.strings.bank", "res://Sons & musiques/Fichiers FMOD/FmodBank/Desktop/Master.bank"]
+
+[node name="StartMusic" type="FmodEventEmitter2D" parent="." unique_id=180580003]
+event_name = "event:/musique"
+event_guid = "{e4dfa194-1024-46bc-b1cb-721e47b25278}"
+autoplay = true
+"fmod_parameters/musique etat/id" = -1242679657255467350
+"fmod_parameters/musique etat" = "menu"
+"fmod_parameters/musique etat/labels" = PackedStringArray("menu", "basique", "sortie")
+"fmod_parameters/musique etat/variant_type" = 4
+
 [node name="Control" type="CanvasLayer" parent="." unique_id=714779241]
 
 [node name="Background" type="ColorRect" parent="Control" unique_id=1639288048]
 offset_right = 1917.0
 offset_bottom = 1079.0
+color = Color(0.8627451, 0.5882353, 0, 1)
 
 [node name="FadeOverlay" type="ColorRect" parent="Control" unique_id=1284048180]
 unique_name_in_owner = true
@@ -52,6 +66,7 @@ theme_override_constants/separation = 20
 [node name="StatusLabel" type="Label" parent="Control/VBoxContainer/HBoxContainer" unique_id=22544246]
 unique_name_in_owner = true
 layout_mode = 2
+theme_override_fonts/font = ExtResource("2_dalek")
 theme_override_colors/font_color = Color(0, 0, 0, 1)
 theme_override_font_sizes/font_size = 79
 text = "Arduino State : "
@@ -67,12 +82,14 @@ theme_override_styles/panel = SubResource("StyleBoxFlat_og4jd")
 [node name="StartButton" type="Button" parent="Control/VBoxContainer" unique_id=1252999707]
 unique_name_in_owner = true
 layout_mode = 2
+theme_override_fonts/font = ExtResource("2_dalek")
 theme_override_font_sizes/font_size = 128
 text = " Start Game "
 
 [node name="StartButton_Without_Arduino" type="Button" parent="Control/VBoxContainer" unique_id=1471615958]
 unique_name_in_owner = true
 layout_mode = 2
+theme_override_fonts/font = ExtResource("2_dalek")
 theme_override_font_sizes/font_size = 128
 text = " Start Game with no Arduino"
 

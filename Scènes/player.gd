@@ -8,7 +8,9 @@ var keyboard_dir := Vector2.ZERO
 
 # Gestion des animations
 @onready var animation_player: AnimationPlayer = find_child("AnimationPlayer", true, false) as AnimationPlayer
+@onready var movement_sound = get_node_or_null("MovementSound")
 var movement_animation_name: String = ""
+var movement_sound_active := false
 
 
 func _on_arduino_message(key: String, value: String) -> void:
@@ -46,7 +48,9 @@ func _ready() -> void:
 
 
 func _physics_process(delta: float) -> void:
-	keyboard_dir = Input.get_vector("ui_left", "ui_right", "ui_up", "ui_down")
+	keyboard_dir = Input.get_vector("Gauche", "Droite", "Avancer", "Reculer")
+	if keyboard_dir.is_zero_approx():
+		keyboard_dir = Input.get_vector("ui_left", "ui_right", "ui_up", "ui_down")
 	var input_dir := joystick_dir
 	if not is_zero_approx(keyboard_dir.x):
 		input_dir.x = keyboard_dir.x
@@ -62,10 +66,12 @@ func _physics_process(delta: float) -> void:
 		velocity.x = forward_direction.x * (-input_dir.y) * SPEED
 		velocity.z = forward_direction.z * (-input_dir.y) * SPEED
 		_play_movement_animation()
+		_start_movement_sound()
 	else:
 		velocity.x = move_toward(velocity.x, 0.0, SPEED)
 		velocity.z = move_toward(velocity.z, 0.0, SPEED)
 		_stop_movement_animation()
+		_stop_movement_sound()
 
 	move_and_slide()
 
@@ -84,3 +90,15 @@ func _stop_movement_animation() -> void:
 
 	if animation_player.is_playing():
 		animation_player.stop()
+
+
+func _start_movement_sound() -> void:
+	if not movement_sound_active and movement_sound != null and movement_sound.event_name != "":
+		movement_sound.play()
+		movement_sound_active = true
+
+
+func _stop_movement_sound() -> void:
+	if movement_sound_active and movement_sound != null and movement_sound.event_name != "":
+		movement_sound.stop()
+		movement_sound_active = false

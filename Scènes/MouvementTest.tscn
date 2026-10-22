@@ -1,6 +1,7 @@
 [gd_scene format=3 uid="uid://6omhm0627yer"]
 
 [ext_resource type="Script" uid="uid://bida8s45pasu6" path="res://Scènes/player.gd" id="1_nr7os"]
+[ext_resource type="Script" uid="uid://b38gnyuiw4nm" path="res://Scènes/return_challenge.gd" id="1_return"]
 [ext_resource type="PackedScene" uid="uid://dd8ax83ymrmuh" path="res://Graphismes/Player/scene.gltf" id="2_8tp81"]
 [ext_resource type="PackedScene" uid="uid://yk0ird8cl61s" path="res://Graphismes/Objets 3D/Tresors/Tresor.tscn" id="4_7ko82"]
 [ext_resource type="PackedScene" uid="uid://4oca6gigp5km" path="res://Graphismes/Objets 3D/artefact_v_2_1.tscn" id="4_ydf0g"]
@@ -21,10 +22,23 @@ ambient_light_color = Color(0, 0, 0.21176471, 1)
 ambient_light_energy = 0.1
 
 [node name="MouvementTest" type="Node3D" unique_id=136737210]
+script = ExtResource("1_return")
+
+[node name="FmodBankLoader" type="FmodBankLoader" parent="." unique_id=180580001]
+bank_paths = ["res://Sons & musiques/Fichiers FMOD/FmodBank/Desktop/Master.strings.bank", "res://Sons & musiques/Fichiers FMOD/FmodBank/Desktop/Master.bank"]
+
+[node name="ReturnWind" type="FmodEventEmitter3D" parent="." unique_id=180580004]
+event_name = "event:/vent"
+event_guid = "{3d5b5bda-a8f5-4067-a352-7eeccf6d7ff1}"
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.79693127, 0.4733305, 20.576843)
 
 [node name="Player" type="CharacterBody3D" parent="." unique_id=1313566045]
 transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, -0.79693127, 0.4733305, 20.576843)
 script = ExtResource("1_nr7os")
+
+[node name="MovementSound" type="FmodEventEmitter3D" parent="Player" unique_id=1313566046]
+event_name = "event:/marche"
+event_guid = "{64f4c633-937c-4230-bdc3-f2cd0bea8951}"
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Player" unique_id=1869274928]
 transform = Transform3D(0.8, 0, 0, 0, 0.8, 0, 0, 0, 0.8, 0, 0, 0)
@@ -39,8 +53,7 @@ transform = Transform3D(-0.005, 0, -4.3711387e-10, 0, 0.005, 0, 4.3711387e-10, 0
 [node name="PlayerLight" type="OmniLight3D" parent="Player" unique_id=721355224]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.6, 0)
 light_color = Color(1, 0.85490197, 0.4627451, 1)
-light_energy = 0.6
-omni_range = 3.0
+omni_range = 6.0
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="." unique_id=1572427533]
 transform = Transform3D(0.8660254, 0.43301272, -0.24999999, 0, 0.49999997, 0.86602545, 0.5, -0.75, 0.43301266, 0, 0, 0)
@@ -49,11 +62,17 @@ visible = false
 [node name="Tresor" parent="." unique_id=1136815373 instance=ExtResource("4_7ko82")]
 transform = Transform3D(-0.3, 0, -4.5298744e-08, 0, 0.3, 0, 4.5298744e-08, 0, -0.3, 32.79151, -0.49631363, 7.2304864)
 
+[node name="ProximitySound" parent="Tresor" index="0" unique_id=42466431]
+event_guid = "{711b265c-95d6-4182-8e06-4b8d903953be}"
+
 [node name="Artefact v2_1" parent="Tresor/Modele" parent_id_path=PackedInt32Array(1136815373, 1915152410) index="0" unique_id=2053282608 instance=ExtResource("4_ydf0g")]
 
 [node name="Tresor2" parent="." unique_id=619824277 instance=ExtResource("4_7ko82")]
 transform = Transform3D(-1.3113417e-08, 0, 0.3, 0, 0.3, 0, -0.3, 0, -1.3113417e-08, 61.1937, -0.5434909, 40.463055)
 id_tresor = 2
+
+[node name="ProximitySound" parent="Tresor2" index="0" unique_id=42466431]
+event_guid = "{711b265c-95d6-4182-8e06-4b8d903953be}"
 
 [node name="Sketchfab_Scene" parent="Tresor2/Modele" parent_id_path=PackedInt32Array(619824277, 1915152410) index="0" unique_id=378791540 instance=ExtResource("5_mku1j")]
 transform = Transform3D(3.999999, -4.2632564e-14, 3.3881318e-21, 0, -1.7484552e-07, -3.999999, 4.2632564e-14, 3.999999, -1.7484552e-07, -0.07846069, -11.457414, -2.2430573)
@@ -61,6 +80,9 @@ transform = Transform3D(3.999999, -4.2632564e-14, 3.3881318e-21, 0, -1.7484552e-
 [node name="Tresor3" parent="." unique_id=336927923 instance=ExtResource("4_7ko82")]
 transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 21.21867, -0.5492486, 72.034065)
 id_tresor = 3
+
+[node name="ProximitySound" parent="Tresor3" index="0" unique_id=42466431]
+event_guid = "{711b265c-95d6-4182-8e06-4b8d903953be}"
 
 [node name="Sketchfab_Scene" parent="Tresor3/Modele" parent_id_path=PackedInt32Array(336927923, 1915152410) index="0" unique_id=216575593 instance=ExtResource("6_a37cf")]
 transform = Transform3D(-7.590405e-09, -0.17364822, 0.9848077, 0.9999998, -4.371138e-08, 0, 4.304731e-08, 0.9848077, 0.17364822, 0, 0.3137318, -1.6330109)
@@ -108,7 +130,10 @@ transform = Transform3D(3, 0, 0, 0, 3, 0, 0, 0, 3, 0, 0, 0)
 transform = Transform3D(-0.44287097, 0, -0.232089, 0, 0.5, 0, 0.232089, 0, -0.44287097, -14.774623, -1.700369, 60.839146)
 id_tresor = 4
 
-[node name="CollisionShape3D" parent="Tresor4" index="0" unique_id=1318787281]
+[node name="ProximitySound" parent="Tresor4" index="0" unique_id=42466431]
+event_guid = "{711b265c-95d6-4182-8e06-4b8d903953be}"
+
+[node name="CollisionShape3D" parent="Tresor4" index="2" unique_id=1318787281]
 transform = Transform3D(25, 0, 0, 0, 25, 0, 0, 0, 25, 0, 0, 0)
 
 [node name="chat" parent="Tresor4/Modele" parent_id_path=PackedInt32Array(2100979969, 1915152410) index="0" unique_id=257533361 instance=ExtResource("12_mku1j")]

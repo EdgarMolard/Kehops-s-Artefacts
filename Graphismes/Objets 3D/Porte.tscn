@@ -58,6 +58,10 @@ _data = {
 [node name="Porte" type="Node3D" unique_id=671626376]
 script = ExtResource("1_tfub5")
 
+[node name="DoorSound" type="FmodEventEmitter3D" parent="." unique_id=-1873670831]
+event_name = "event:/porte"
+event_guid = "{03f4a7fd-54e1-4be3-98c4-340738fc9a09}"
+
 [node name="PorteMobile" type="AnimatableBody3D" parent="." unique_id=1234950046]
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="PorteMobile" unique_id=1581848243]

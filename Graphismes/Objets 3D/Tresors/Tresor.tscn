@@ -7,11 +7,12 @@
 [node name="Tresor" type="Area3D" unique_id=1136815373]
 script = ExtResource("1_fse2q")
 
-[node name="ProximitySound" type="FmodEventEmitter3D" parent="."]
-event_name = "event:/WalkingSound"
-event_guid = "{823920e1-28b1-46ce-a882-7ca531b9a868}"
-autoplay = false
-auto_release = false
+[node name="ProximitySound" type="FmodEventEmitter3D" parent="." unique_id=42466431]
+event_name = "event:/objet"
+event_guid = "{466e60c0-c5b6-4c9e-b7a7-630101fed750}"
+[node name="PickupSound" type="FmodEventEmitter3D" parent="." unique_id=42466432]
+event_name = "event:/ramasser"
+event_guid = "{acbd3b7c-29df-4ad4-9994-1f8d6b2e5ba0}"
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1318787281]
 transform = Transform3D(10, 0, 0, 0, 10, 0, 0, 0, 10, 0, 0, 0)

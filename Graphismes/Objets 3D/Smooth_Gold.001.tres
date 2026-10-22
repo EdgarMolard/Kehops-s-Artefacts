@@ -1,0 +1,8 @@
+[gd_resource type="StandardMaterial3D" format=3 uid="uid://bb4wehf1b7ylw"]
+
+[resource]
+resource_name = "Smooth_Gold.001"
+cull_mode = 2
+albedo_color = Color(1, 0.7118023, 0.2864562, 1)
+metallic = 1.0
+roughness = 0.026282746
