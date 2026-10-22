@@ -9,7 +9,7 @@
 script = ExtResource("1_fse2q")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1318787281]
-transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, 0, 0, 0)
+transform = Transform3D(4, 0, 0, 0, 4, 0, 0, 0, 4, 0, 0, 0)
 shape = SubResource("SphereShape3D_wruui")
 
 [node name="Artefact v2_1" parent="." unique_id=2053282608 instance=ExtResource("2_vefmd")]

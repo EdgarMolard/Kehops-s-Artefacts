@@ -4,9 +4,10 @@ extends Area3D
 
 var joueur_proche := false
 var recupere := false
-
+var interaction_ui: InteractionUI
 
 func _ready() -> void:
+	interaction_ui = get_parent().get_node_or_null("CanvasLayer") as InteractionUI
 	body_entered.connect(_on_body_entered)
 	body_exited.connect(_on_body_exited)
 	ArduinoManager.interaction_requested.connect(_on_interaction_requested)
@@ -15,11 +16,15 @@ func _ready() -> void:
 func _on_body_entered(body: Node3D) -> void:
 	if body.is_in_group("joueur"):
 		joueur_proche = true
+		if interaction_ui != null:
+			interaction_ui.show_prompt(self, "E — Récupérer")
 
 
 func _on_body_exited(body: Node3D) -> void:
 	if body.is_in_group("joueur"):
 		joueur_proche = false
+		if interaction_ui != null:
+			interaction_ui.hide_prompt(self)
 
 
 func _process(_delta: float) -> void:
@@ -35,6 +40,8 @@ func recuperer() -> void:
 		return
 
 	recupere = true
+	if interaction_ui != null:
+		interaction_ui.hide_prompt(self)
 	_marquer_comme_recupere()
 
 	print("Trésor ", id_tresor, " récupéré")

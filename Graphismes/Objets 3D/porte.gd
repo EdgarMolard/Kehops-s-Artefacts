@@ -5,9 +5,10 @@ extends Node3D
 
 var joueur_proche := false
 var ouverte := false
-
+var interaction_ui: InteractionUI
 
 func _ready() -> void:
+	interaction_ui = get_parent().get_node_or_null("CanvasLayer") as InteractionUI
 	zone_interaction.body_entered.connect(_on_body_entered)
 	zone_interaction.body_exited.connect(_on_body_exited)
 	ArduinoManager.interaction_requested.connect(_on_interaction_requested)
@@ -19,12 +20,21 @@ func _ready() -> void:
 func _on_body_entered(body: Node3D) -> void:
 	if body.is_in_group("joueur"):
 		joueur_proche = true
-		print("Le joueur est devant la porte")
+		if ouverte:
+			return
 
+		if g_vars.tous_les_tresors_recuperes():
+			if interaction_ui != null:
+				interaction_ui.show_prompt(self, "E — Ouvrir")
+		else:
+			if interaction_ui != null:
+				interaction_ui.show_prompt(self, "Trésors requis")
 
 func _on_body_exited(body: Node3D) -> void:
 	if body.is_in_group("joueur"):
 		joueur_proche = false
+		if interaction_ui != null:
+			interaction_ui.hide_prompt(self)
 
 
 func _process(_delta: float) -> void:
@@ -62,5 +72,7 @@ func ouvrir() -> void:
 		return
 
 	ouverte = true
+	if interaction_ui != null:
+		interaction_ui.hide_prompt(self)
 	animation_player.play("Ouvrir")
 	print("La porte s'ouvre")

@@ -10,9 +10,11 @@ signal activated
 
 var player_nearby := false
 var is_lit := false
+var interaction_ui: InteractionUI
 
 
 func _ready() -> void:
+	interaction_ui = get_parent().get_node_or_null("CanvasLayer") as InteractionUI
 	if flame_light == null:
 		push_error("Torche : le nœud FlameLight est introuvable.")
 		return
@@ -45,10 +47,16 @@ func _on_body_entered(body: Node3D) -> void:
 	if body.is_in_group("joueur"):
 		player_nearby = true
 
+		if not is_lit:
+			if interaction_ui != null:
+				interaction_ui.show_prompt(self, "E — Allumer")
+
 
 func _on_body_exited(body: Node3D) -> void:
 	if body.is_in_group("joueur"):
 		player_nearby = false
+		if interaction_ui != null:
+			interaction_ui.hide_prompt(self)
 
 
 func _light_torch() -> void:
@@ -56,5 +64,7 @@ func _light_torch() -> void:
 		return
 
 	is_lit = true
+	if interaction_ui != null:
+		interaction_ui.hide_prompt(self)
 	flame_light.visible = true
 	activated.emit()
