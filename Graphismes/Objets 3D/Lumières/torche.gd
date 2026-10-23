@@ -52,7 +52,7 @@ func _on_body_entered(body: Node3D) -> void:
 		player_nearby = true
 		# L'invite n'est affichée que si la torche n'est pas déjà allumée.
 		if not is_lit and interaction_ui != null:
-			interaction_ui.show_prompt(self, "E — Allumer")
+			interaction_ui.show_prompt(self, "Allumer")
 
 
 func _on_body_exited(body: Node3D) -> void:

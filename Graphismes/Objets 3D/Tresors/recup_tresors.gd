@@ -25,7 +25,7 @@ func _on_body_entered(body: Node3D) -> void:
 	if body.is_in_group("joueur"):
 		joueur_proche = true
 		if interaction_ui != null:
-			interaction_ui.show_prompt(self, "E — Récupérer")
+			interaction_ui.show_prompt(self, "E/Tendre la main pour récupérer")
 
 
 func _on_body_exited(body: Node3D) -> void:

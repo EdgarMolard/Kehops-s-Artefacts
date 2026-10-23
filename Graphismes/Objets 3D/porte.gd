@@ -26,7 +26,7 @@ func _on_body_entered(body: Node3D) -> void:
 
 		if g_vars.tous_les_tresors_recuperes():
 			if interaction_ui != null:
-				interaction_ui.show_prompt(self, "E — Ouvrir")
+				interaction_ui.show_prompt(self, "E/Pousser la porte avec vos mains")
 		else:
 			if interaction_ui != null:
 				interaction_ui.show_prompt(self, "Trésors requis")
