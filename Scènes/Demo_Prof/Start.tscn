@@ -91,7 +91,7 @@ unique_name_in_owner = true
 layout_mode = 2
 theme_override_fonts/font = ExtResource("2_dalek")
 theme_override_font_sizes/font_size = 128
-text = " Start Game with no Arduino"
+text = " Start Game with no controller"
 
 [connection signal="pressed" from="Control/VBoxContainer/StartButton" to="." method="_on_start_button_pressed"]
 [connection signal="pressed" from="Control/VBoxContainer/StartButton_Without_Arduino" to="." method="_on_start_button_without_arduino_pressed"]
