@@ -10,7 +10,7 @@ func _ready() -> void:
 	ArduinoManager.arduino_disconnected.connect(_on_arduino_disconnected)
 	
 	StatusDot.modulate = Color.RED
-	StatusLabel.text = "Arduino Pas Connectée"
+	StatusLabel.text = "Manette Pas Connectée"
 	StartButton.disabled = true
 	if ArduinoManager.paired_port != "":
 		# Si l'Arduino était déjà associé avant l'affichage de l'écran, on met l'UI à jour.
@@ -24,7 +24,7 @@ func _process(delta: float) -> void:
 func _on_arduino_connected():
 	# La connexion active le bouton de démarrage avec le matériel.
 	StatusDot.modulate = Color.GREEN
-	StatusLabel.text = "Arduino Connecté"
+	StatusLabel.text = "Manette Connecté"
 	StartButton.disabled = false
 	
 func _on_arduino_disconnected():
